@@ -74,7 +74,7 @@ export const uploadMedia = async (file: File): Promise<{ media_url: string }> =>
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const response = await fetch('/api/media/upload', {
+  const response = await fetch(`${BASE}/media/upload`, {
     method: 'POST',
     body: formData,
     headers,
