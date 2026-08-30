@@ -56,8 +56,13 @@ class GoogleAuthRequest(BaseModel):
 @router.post("/google", response_model=Token)
 def google_auth(request: GoogleAuthRequest, db: Session = Depends(get_db)):
     try:
-        # Note: In a real app, verify CLIENT_ID
-        idinfo = id_token.verify_oauth2_token(request.token, requests.Request())
+        # Verify CLIENT_ID if configured
+        from app.core.config import settings
+        idinfo = id_token.verify_oauth2_token(
+            request.token, 
+            requests.Request(),
+            audience=settings.GOOGLE_CLIENT_ID if settings.GOOGLE_CLIENT_ID else None
+        )
         email = idinfo['email']
         
         user = db.query(User).filter(User.email == email).first()

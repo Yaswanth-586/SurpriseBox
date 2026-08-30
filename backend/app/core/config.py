@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     SUPABASE_KEY: str | None = None
     SUPABASE_STORAGE_BUCKET: str = "surprises"
 
+    # Google Auth
+    GOOGLE_CLIENT_ID: str | None = None
+
     # CORS
     @property
     def cors_origins(self) -> List[str]:
